@@ -1,4 +1,3 @@
-// 10-car.js
 export default class Car {
   constructor(brand, motor, color) {
     this._brand = brand;
@@ -6,7 +5,11 @@ export default class Car {
     this._color = color;
   }
 
+  static get [Symbol.species]() {
+    return this;
+  }
+
   cloneCar() {
-    return new Car(this._brand, this._motor, this._color);
+    return new this.constructor();
   }
 }
