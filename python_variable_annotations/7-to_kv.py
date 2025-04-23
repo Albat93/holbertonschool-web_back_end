@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Module that provides a function returning a tuple from a string and a number."""
+"""Module that provides a function returning tuple from string and a number."""
 
 
 from typing import Union, Tuple
