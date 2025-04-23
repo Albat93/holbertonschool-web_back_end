@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
-"""Module contenant une fonction pour additionner deux nombres à virgule flottante."""
+"""Module that provides a function to add two float numbers."""
+
 
 def add(a: float, b: float) -> float:
-    """Additionne deux nombres flottants et retourne le résultat.
+    """Return the sum of two float numbers.
 
     Args:
-        a (float): Le premier nombre.
-        b (float): Le second nombre.
+        a (float): The first float number.
+        b (float): The second float number.
 
     Returns:
-        float: La somme de a et b.
+        float: The sum of a and b.
     """
     return a + b
