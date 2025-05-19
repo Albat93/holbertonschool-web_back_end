@@ -2,38 +2,44 @@ const fs = require('fs');
 
 function countStudents(path) {
   return new Promise((resolve, reject) => {
+    // Lire le fichier de manière asynchrone
     fs.readFile(path, 'utf-8', (err, data) => {
       if (err) {
         reject(new Error('Cannot load the database'));
         return;
       }
 
+      // Diviser le contenu du fichier en lignes, filtrer les lignes vides
       const lines = data.split('\n').filter((line) => line.trim() !== '');
 
-      if (lines.length <= 1) {
-        process.stdout.write('Number of students: 0\n');
-        resolve();
-        return;
-      }
+      // Enlever la ligne d'en-tête
+      lines.shift();
 
-      const students = lines.slice(1);
-      const fields = {};
+      // Initialisation de la structure de données pour compter les étudiants
+      const students = {};
+      let totalStudents = 0;
 
-      for (const student of students) {
-        const values = student.split(',').map((x) => x.trim());
-        if (values.length < 4) continue;
-        const [firstName, , , field] = values;
+      lines.forEach((line) => {
+        const [firstname, , , field] = line.split(',');
 
-        if (!fields[field]) fields[field] = [];
-        fields[field].push(firstName);
-      }
+        if (firstname && field) {
+          totalStudents += 1;
 
-      process.stdout.write(`Number of students: ${students.length}\n`);
+          if (!students[field]) {
+            students[field] = [];
+          }
 
-      for (const field of Object.keys(fields)) {
-        const list = fields[field];
-        process.stdout.write(
-          `Number of students in ${field}: ${list.length}. List: ${list.join(', ')}\n`
+          students[field].push(firstname);
+        }
+      });
+
+      // Afficher le nombre total d'étudiants
+      console.log(`Number of students: ${totalStudents}`);
+
+      // Afficher le nombre d'étudiants et leurs noms pour chaque champ
+      for (const [field, names] of Object.entries(students)) {
+        console.log(
+          `Number of students in ${field}: ${names.length}. List: ${names.join(', ')}`,
         );
       }
 
